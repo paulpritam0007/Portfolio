@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBSIDIAN — Product Trailer</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #000000;
+    --white: #ffffff;
+    --gray-900: #0a0a0a;
+    --gray-700: #1a1a1a;
+    --gray-400: #666666;
+    --gray-200: #aaaaaa;
+    --gray-100: #cccccc;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ===== CANVAS RIPPLE CURSOR ===== */
+  #ripple-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 490;
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+
+  /* Tiny white dot at exact cursor tip */
+  #ripple-dot {
+    position: fixed;
+    width: 5px; height: 5px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 491;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px rgba(255,255,255,0.8), 0 0 16px rgba(255,255,255,0.3);
+    transition: opacity 0.2s ease;
+  }
+
+  /* GLOBAL SECTION STYLES */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* =================== SCENE 1: INTRO =================== */
+  #scene-intro {
+    background: var(--black);
+    z-index: 1;
+  }
+
+  .intro-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 60%, #1a1a1a 0%, #000 70%);
+  }
+
+  /* Scanline noise */
+  .noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .intro-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .intro-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5em;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+  }
+
+  .intro-logo {
+    font-size: clamp(72px, 14vw, 160px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: var(--white);
+    opacity: 0;
+    animation: blurReveal 1.2s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
+  }
+
+  .intro-tagline {
+    font-size: clamp(11px, 1.5vw, 14px);
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gray-200);
+    text-transform: uppercase;
+    margin-top: 36px;
+    opacity: 0;
+    animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 1.6s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 1s ease 2.4s forwards;
+  }
+  .scroll-hint span {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    color: var(--gray-400);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--gray-400), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* =================== SCENE 2: HEADLINE =================== */
+  #scene-headline {
+    background: var(--white);
+    color: var(--black);
+  }
+
+  .hl-content {
+    text-align: center;
+    padding: 0 5vw;
+    max-width: 1000px;
+  }
+
+  .hl-overline {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    color: #999;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .hl-title {
+    font-size: clamp(48px, 9vw, 110px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    color: var(--black);
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+    transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1);
+  }
+  .hl-title em {
+    font-style: normal;
+    color: #111;
+    -webkit-text-stroke: 2px #000;
+    color: transparent;
+  }
+
+  .hl-sub {
+    font-size: clamp(13px, 1.8vw, 18px);
+    font-weight: 300;
+    color: #555;
+    margin-top: 40px;
+    line-height: 1.7;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+
+  .scene-visible .hl-overline,
+  .scene-visible .hl-title,
+  .scene-visible .hl-sub {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* =================== SCENE 3: PRODUCT VISUAL =================== */
+  #scene-product {
+    background: var(--black);
+  }
+
+  .product-stage {
+    position: relative;
+    width: min(500px, 80vw);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Concentric rings */
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+    animation: ringRotate linear infinite;
+  }
+  .ring:nth-child(1) { width: 100%; height: 100%; animation-duration: 30s; }
+  .ring:nth-child(2) { width: 78%; height: 78%; animation-duration: 22s; animation-direction: reverse; border-color: rgba(255,255,255,0.09); }
+  .ring:nth-child(3) { width: 56%; height: 56%; animation-duration: 16s; border-color: rgba(255,255,255,0.13); }
+  .ring:nth-child(4) { width: 34%; height: 34%; animation-duration: 10s; animation-direction: reverse; border-color: rgba(255,255,255,0.2); }
+
+  /* Ring orbital dots */
+  .ring::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 6px; height: 6px;
+    background: var(--white);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 12px rgba(255,255,255,0.8);
+  }
+
+  .product-core {
+    position: relative;
+    z-index: 2;
+    width: 120px; height: 120px;
+    background: var(--white);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 80px rgba(255,255,255,0.15), 0 0 160px rgba(255,255,255,0.05);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .product-icon {
+    width: 56px; height: 56px;
+    position: relative;
+  }
+  .product-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--black);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: translateY(-4px);
+  }
+  .product-icon::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px; height: 6px;
+    background: var(--black);
+    border-radius: 50%;
+  }
+
+  .product-label {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* =================== SCENE 4: STATS =================== */
+  #scene-stats {
+    background: var(--gray-900);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    width: min(900px, 90vw);
+  }
+
+  .stat-block {
+    background: var(--gray-700);
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .stat-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+  }
+
+  .stat-block:nth-child(2) { transition-delay: 0.15s; }
+  .stat-block:nth-child(3) { transition-delay: 0.3s; }
+
+  .scene-visible .stat-block {
+    opacity: 1;
+    transform: none;
+  }
+
+  .stat-num {
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--white);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-unit {
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 200;
+    color: var(--gray-200);
+    margin-left: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    margin-top: 16px;
+    display: block;
+  }
+
+  /* =================== SCENE 5: FEATURES =================== */
+  #scene-features {
+    background: var(--white);
+    color: var(--black);
+    min-height: auto;
+    padding: 120px 5vw;
+  }
+
+  .features-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .features-header h2 {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--black);
+  }
+
+  .features-list {
+    width: min(800px, 90vw);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .feature-row {
+    display: flex;
+    align-items: center;
+    padding: 32px 40px;
+    background: #f5f5f5;
+    gap: 32px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease;
+    cursor: none;
+  }
+  .feature-row:nth-child(2) { transition-delay: 0.1s; }
+  .feature-row:nth-child(3) { transition-delay: 0.2s; }
+  .feature-row:nth-child(4) { transition-delay: 0.3s; }
+  .feature-row:nth-child(5) { transition-delay: 0.4s; }
+
+  .feature-row:hover { background: #ebebeb; }
+
+  .scene-visible .feature-row {
+    opacity: 1;
+    transform: none;
+  }
+
+  .feature-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #aaa;
+    width: 32px;
+    flex-shrink: 0;
+  }
+
+  .feature-name {
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 700;
+    color: var(--black);
+    flex: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .feature-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: #777;
+    max-width: 260px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  .feature-arrow {
+    width: 24px; height: 24px;
+    border: 1.5px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 10px;
+    color: #aaa;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  .feature-row:hover .feature-arrow { border-color: #000; color: #000; }
+
+  /* =================== SCENE 6: MOTION TYPOGRAPHY =================== */
+  #scene-motion {
+    background: var(--black);
+    overflow: hidden;
+  }
+
+  .marquee-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .marquee-row {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .marquee-inner {
+    display: flex;
+    animation: marquee 12s linear infinite;
+    will-change: transform;
+  }
+  .marquee-row:nth-child(2) .marquee-inner { animation-direction: reverse; animation-duration: 16s; }
+  .marquee-row:nth-child(3) .marquee-inner { animation-duration: 10s; }
+
+  .marquee-text {
+    font-size: clamp(56px, 9vw, 100px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    padding: 0 40px;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .mt-solid { color: var(--white); }
+  .mt-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.25);
+  }
+
+  /* =================== SCENE 7: CTA =================== */
+  #scene-cta {
+    background: var(--black);
+  }
+
+  .cta-content { text-align: center; }
+
+  .cta-pre {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5em;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .cta-title {
+    font-size: clamp(48px, 10vw, 120px);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.88;
+    opacity: 0;
+    animation: blurReveal 1.2s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+  }
+
+  .cta-title .line-1 { color: var(--white); display: block; }
+  .cta-title .line-2 {
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255,255,255,0.4);
+    display: block;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s both;
+  }
+
+  .btn-primary {
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    padding: 18px 48px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(255,255,255,0.15);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 18px 48px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .cta-footnote {
+    margin-top: 48px;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--gray-400);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.5s both;
+  }
+
+  /* =================== PROGRESS BAR =================== */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 1px;
+    background: var(--white);
+    z-index: 1000;
+    width: 0%;
+    transition: width 0.1s linear;
+    mix-blend-mode: difference;
+  }
+
+  /* =================== NAV =================== */
+  nav {
+    position: fixed;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease 2s forwards;
+    mix-blend-mode: difference;
+  }
+
+  .nav-logo {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  /* =================== KEYFRAMES =================== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translate(-50%, -16px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  @keyframes blurReveal {
+    from {
+      opacity: 0;
+      filter: blur(24px);
+      transform: scale(1.04);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0px);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-16px); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .feature-desc { display: none; }
+    nav { gap: 24px; }
+    .nav-links { display: none; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Canvas Ripple -->
+<canvas id="ripple-canvas"></canvas>
+<div id="ripple-dot"></div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav -->
+<nav>
+  <span class="nav-logo">Obsidian</span>
+  <ul class="nav-links">
+    <li><a href="#scene-headline">Vision</a></li>
+    <li><a href="#scene-stats">Specs</a></li>
+    <li><a href="#scene-features">Features</a></li>
+    <li><a href="#scene-cta">Order</a></li>
+  </ul>
+</nav>
+
+<!-- SCENE 1: INTRO -->
+<section id="scene-intro">
+  <div class="intro-bg"></div>
+  <div class="noise"></div>
+  <div class="intro-content">
+    <p class="intro-eyebrow">Introducing</p>
+    <h1 class="intro-logo">OBSIDIAN</h1>
+    <p class="intro-tagline">Precision — Power — Perfection</p>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SCENE 2: HEADLINE -->
+<section id="scene-headline">
+  <div class="hl-content">
+    <p class="hl-overline">A New Era Begins</p>
+    <h2 class="hl-title">The future<br>is <em>silent</em>.</h2>
+    <p class="hl-sub">Designed from first principles. Every curve, every edge, every interaction — engineered to disappear so you can focus on what matters.</p>
+  </div>
+</section>
+
+<!-- SCENE 3: PRODUCT VISUAL -->
+<section id="scene-product">
+  <div class="product-stage">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="product-core">
+      <div class="product-icon"></div>
+    </div>
+    <span class="product-label">Obsidian X — 2026</span>
+  </div>
+</section>
+
+<!-- SCENE 4: STATS -->
+<section id="scene-stats">
+  <div class="stats-grid">
+    <div class="stat-block">
+      <span class="stat-num">0.4<span class="stat-unit">mm</span></span>
+      <span class="stat-label">Bezel Thickness</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num">3<span class="stat-unit">nm</span></span>
+      <span class="stat-label">Process Node</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num">48<span class="stat-unit">h</span></span>
+      <span class="stat-label">Battery Life</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5: FEATURES -->
+<section id="scene-features">
+  <div class="features-header">
+    <h2>Built different.</h2>
+  </div>
+  <div class="features-list">
+    <div class="feature-row">
+      <span class="feature-num">01</span>
+      <span class="feature-name">Adaptive Display</span>
+      <span class="feature-desc">120Hz ProMotion with ambient light sensing across 10 billion colors</span>
+      <div class="feature-arrow">→</div>
+    </div>
+    <div class="feature-row">
+      <span class="feature-num">02</span>
+      <span class="feature-name">Neural Engine X</span>
+      <span class="feature-desc">On-device AI processing at 35 TOPS with zero latency</span>
+      <div class="feature-arrow">→</div>
+    </div>
+    <div class="feature-row">
+      <span class="feature-num">03</span>
+      <span class="feature-name">Acoustic Chamber</span>
+      <span class="feature-desc">Spatial audio with real-time environment mapping</span>
+      <div class="feature-arrow">→</div>
+    </div>
+    <div class="feature-row">
+      <span class="feature-num">04</span>
+      <span class="feature-name">Monolithic Frame</span>
+      <span class="feature-desc">Aerospace titanium machined from a single billet</span>
+      <div class="feature-arrow">→</div>
+    </div>
+    <div class="feature-row">
+      <span class="feature-num">05</span>
+      <span class="feature-name">Zero-Compression OS</span>
+      <span class="feature-desc">Lossless performance from first boot to ten years in</span>
+      <div class="feature-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6: MOTION TYPOGRAPHY -->
+<section id="scene-motion">
+  <div class="marquee-stack">
+    <div class="marquee-row">
+      <div class="marquee-inner">
+        <span class="marquee-text mt-solid">OBSIDIAN&nbsp;</span>
+        <span class="marquee-text mt-outline">PRECISION&nbsp;</span>
+        <span class="marquee-text mt-solid">DESIGN&nbsp;</span>
+        <span class="marquee-text mt-outline">OBSIDIAN&nbsp;</span>
+        <span class="marquee-text mt-solid">PRECISION&nbsp;</span>
+        <span class="marquee-text mt-outline">DESIGN&nbsp;</span>
+        <span class="marquee-text mt-solid">OBSIDIAN&nbsp;</span>
+        <span class="marquee-text mt-outline">PRECISION&nbsp;</span>
+        <span class="marquee-text mt-solid">DESIGN&nbsp;</span>
+        <span class="marquee-text mt-outline">OBSIDIAN&nbsp;</span>
+      </div>
+    </div>
+    <div class="marquee-row">
+      <div class="marquee-inner">
+        <span class="marquee-text mt-outline">POWER&nbsp;</span>
+        <span class="marquee-text mt-solid">SILENCE&nbsp;</span>
+        <span class="marquee-text mt-outline">FUTURE&nbsp;</span>
+        <span class="marquee-text mt-solid">POWER&nbsp;</span>
+        <span class="marquee-text mt-outline">SILENCE&nbsp;</span>
+        <span class="marquee-text mt-solid">FUTURE&nbsp;</span>
+        <span class="marquee-text mt-outline">POWER&nbsp;</span>
+        <span class="marquee-text mt-solid">SILENCE&nbsp;</span>
+        <span class="marquee-text mt-outline">FUTURE&nbsp;</span>
+        <span class="marquee-text mt-solid">POWER&nbsp;</span>
+      </div>
+    </div>
+    <div class="marquee-row">
+      <div class="marquee-inner">
+        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
+        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
+        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
+        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
+        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
+        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
+        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
+        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
+        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
+        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 7: CTA -->
+<section id="scene-cta">
+  <div class="cta-content">
+    <p class="cta-pre">Available Now</p>
+    <h2 class="cta-title">
+      <span class="line-1">Own the</span>
+      <span class="line-2">silence.</span>
+    </h2>
+    <div class="cta-buttons">
+      <button class="btn-primary">Order Now</button>
+      <button class="btn-secondary">Learn More</button>
+    </div>
+    <p class="cta-footnote">Starting at $2,999 — Free shipping worldwide</p>
+  </div>
+</section>
+
+<script>
+  // ===== CANVAS RIPPLE ENGINE =====
+  const canvas = document.getElementById('ripple-canvas');
+  const ctx = canvas.getContext('2d');
+  const dot = document.getElementById('ripple-dot');
+
+  // Resize canvas to full viewport
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Ripple pool
+  const ripples = [];
+  let mouseX = -999, mouseY = -999;
+  let lastRippleTime = 0;
+  let isOnDark = false;
+
+  // Ripple flavors: 'move' = small fast rings, 'click' = big burst
+  function spawnRipple(x, y, type = 'move') {
+    if (type === 'move') {
+      ripples.push({ x, y, r: 2, maxR: 80 + Math.random() * 40, alpha: 0.55, lineWidth: 0.8, speed: 2.2 + Math.random() * 1.2 });
+    } else if (type === 'click') {
+      // Burst: 5 rings at staggered start radii
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          ripples.push({ x, y, r: i * 12, maxR: 180 + i * 30, alpha: 0.9 - i * 0.1, lineWidth: 1.5 - i * 0.2, speed: 3.5 + i * 0.4 });
+        }, i * 40);
+      }
+    }
+  }
+
+  // Check if cursor is on a dark section
+  const darkSections = new Set(['scene-intro','scene-product','scene-motion','scene-stats','scene-cta']);
+  function checkDarkSection(x, y) {
+    const el = document.elementFromPoint(x, y);
+    const sec = el?.closest('section');
+    return sec ? darkSections.has(sec.id) : false;
+  }
+
+  // Mouse move — spawn ripple on movement, throttled
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+
+    isOnDark = checkDarkSection(mouseX, mouseY);
+    dot.style.opacity = isOnDark ? '1' : '0';
+
+    const now = performance.now();
+    // Spawn a new move-ripple every ~80ms of movement on dark sections
+    if (isOnDark && now - lastRippleTime > 80) {
+      spawnRipple(mouseX, mouseY, 'move');
+      lastRippleTime = now;
+    }
+  });
+
+  // Click — burst of rings
+  document.addEventListener('click', e => {
+    if (checkDarkSection(e.clientX, e.clientY)) {
+      spawnRipple(e.clientX, e.clientY, 'click');
+    }
+  });
+
+  // Main render loop
+  function render() {
+    // Clear with full transparency — canvas is overlaid, mix-blend-mode:screen
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+
+      // Fade based on progress through life
+      const progress = rp.r / rp.maxR;
+      const currentAlpha = rp.alpha * (1 - progress * progress); // ease-out fade
+
+      if (currentAlpha < 0.003 || rp.r >= rp.maxR) {
+        ripples.splice(i, 1);
+        continue;
+      }
+
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${currentAlpha})`;
+      ctx.lineWidth = rp.lineWidth * (1 - progress * 0.5); // thin as they expand
+      ctx.stroke();
+
+      // Expand
+      rp.r += rp.speed;
+    }
+
+    requestAnimationFrame(render);
+  }
+  render();
+
+  // Passive ambient ripples — pulse from center of dark sections when idle
+  let idleTimer = null;
+  let lastMoveTime = performance.now();
+  document.addEventListener('mousemove', () => { lastMoveTime = performance.now(); });
+
+  function ambientPulse() {
+    const idle = performance.now() - lastMoveTime > 2000;
+    if (idle && ripples.length < 3) {
+      // Pulse from current position if on dark
+      if (isOnDark && mouseX > 0) {
+        spawnRipple(mouseX, mouseY, 'move');
+      }
+    }
+    setTimeout(ambientPulse, 900);
+  }
+  ambientPulse();
+
+  // Progress bar
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    progressBar.style.width = pct + '%';
+  });
+
+  // Scroll reveal
+  const observers = [];
+  const revealSections = document.querySelectorAll('#scene-headline, #scene-stats, #scene-features');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('scene-visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  revealSections.forEach(s => observer.observe(s));
+
+  // CTA section re-trigger animation by adding class when visible
+  const ctaObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('[style*="animation"]').forEach(el => {
+          el.style.animationPlayState = 'running';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('#scene-cta').forEach(s => ctaObserver.observe(s));
+</script>
+</body>
+</html>
