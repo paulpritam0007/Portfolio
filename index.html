@@ -439,6 +439,88 @@
     line-height: 1.5;
   }
 
+  .hl-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 36px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+  .hl-keywords span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #333;
+    border: 1.5px solid #ccc;
+    padding: 8px 18px;
+    border-radius: 100px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  .hl-keywords span:hover { border-color: #000; color: #000; }
+  .scene-visible .hl-keywords { opacity: 1; transform: none; }
+
+  .feature-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .feature-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #555;
+    border: 1px solid #ddd;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .feature-desc-full {
+    font-size: 13px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .feature-strategy {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+    padding: 10px 14px;
+    background: #efefef;
+    border-left: 2px solid #ccc;
+  }
+
+  .strategy-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #999;
+    white-space: nowrap;
+  }
+
+  .strategy-space {
+    font-size: 12px;
+    font-weight: 300;
+    color: #bbb;
+    font-style: italic;
+  }
+
   .feature-arrow {
     width: 24px; height: 24px;
     border: 1.5px solid #ccc;
@@ -702,12 +784,12 @@
 
 <!-- Nav -->
 <nav>
-  <span class="nav-logo">Obsidian</span>
+  <span class="nav-logo">Pritam Paul</span>
   <ul class="nav-links">
-    <li><a href="#scene-headline">Vision</a></li>
-    <li><a href="#scene-stats">Specs</a></li>
-    <li><a href="#scene-features">Features</a></li>
-    <li><a href="#scene-cta">Order</a></li>
+    <li><a href="#scene-headline">About</a></li>
+    <li><a href="#scene-stats">Stats</a></li>
+    <li><a href="#scene-features">Projects</a></li>
+    <li><a href="#scene-cta">Contact</a></li>
   </ul>
 </nav>
 
@@ -716,9 +798,9 @@
   <div class="intro-bg"></div>
   <div class="noise"></div>
   <div class="intro-content">
-    <p class="intro-eyebrow">Introducing</p>
-    <h1 class="intro-logo">OBSIDIAN</h1>
-    <p class="intro-tagline">Precision — Power — Perfection</p>
+    <p class="intro-eyebrow">Portfolio — 2026</p>
+    <h1 class="intro-logo">PRITAM<br>PAUL</h1>
+    <p class="intro-tagline">Developer — Builder — Dreamer</p>
   </div>
   <div class="scroll-hint">
     <span>Scroll</span>
@@ -730,8 +812,15 @@
 <section id="scene-headline">
   <div class="hl-content">
     <p class="hl-overline">A New Era Begins</p>
-    <h2 class="hl-title">The future<br>is <em>silent</em>.</h2>
-    <p class="hl-sub">Designed from first principles. Every curve, every edge, every interaction — engineered to disappear so you can focus on what matters.</p>
+    <h2 class="hl-title">Build bold.<br>Ship <em>real</em>.</h2>
+    <p class="hl-sub">Ideas are worthless without execution. I don't just write code — I build products that solve real problems, reach real users, and leave a real mark. Every project is a statement.</p>
+    <div class="hl-keywords">
+      <span>Relentless</span>
+      <span>Curious</span>
+      <span>Full-Stack</span>
+      <span>Product-Minded</span>
+      <span>Never Stops</span>
+    </div>
   </div>
 </section>
 
@@ -745,7 +834,7 @@
     <div class="product-core">
       <div class="product-icon"></div>
     </div>
-    <span class="product-label">Obsidian X — 2026</span>
+    <span class="product-label">Pritam Paul — West Bengal, India</span>
   </div>
 </section>
 
@@ -753,56 +842,75 @@
 <section id="scene-stats">
   <div class="stats-grid">
     <div class="stat-block">
-      <span class="stat-num">0.4<span class="stat-unit">mm</span></span>
-      <span class="stat-label">Bezel Thickness</span>
+      <span class="stat-num">3<span class="stat-unit">+</span></span>
+      <span class="stat-label">Live Projects</span>
     </div>
     <div class="stat-block">
-      <span class="stat-num">3<span class="stat-unit">nm</span></span>
-      <span class="stat-label">Process Node</span>
+      <span class="stat-num">5<span class="stat-unit">+</span></span>
+      <span class="stat-label">Technologies</span>
     </div>
     <div class="stat-block">
-      <span class="stat-num">48<span class="stat-unit">h</span></span>
-      <span class="stat-label">Battery Life</span>
+      <span class="stat-num">∞<span class="stat-unit"></span></span>
+      <span class="stat-label">Ideas in Queue</span>
     </div>
   </div>
 </section>
 
-<!-- SCENE 5: FEATURES -->
+<!-- SCENE 5: PROJECTS -->
 <section id="scene-features">
   <div class="features-header">
     <h2>Built different.</h2>
   </div>
   <div class="features-list">
+
+    <!-- Project 01: Scentra -->
     <div class="feature-row">
       <span class="feature-num">01</span>
-      <span class="feature-name">Adaptive Display</span>
-      <span class="feature-desc">120Hz ProMotion with ambient light sensing across 10 billion colors</span>
+      <div class="feature-main">
+        <span class="feature-name">Scentra</span>
+        <span class="feature-tags">
+          <span class="tag">Firebase</span>
+          <span class="tag">RazorPay API</span>
+          <span class="tag">NoSQL</span>
+        </span>
+        <span class="feature-desc-full">Scented candle e-commerce platform with full online ordering powered by RazorPay API and a Firebase NoSQL backend.</span>
+        <span class="feature-strategy">
+          <span class="strategy-label">Business Strategy</span>
+          <span class="strategy-space">[ space left for your notes ]</span>
+        </span>
+      </div>
       <div class="feature-arrow">→</div>
     </div>
+
+    <!-- Project 02: Secure File Manager -->
     <div class="feature-row">
       <span class="feature-num">02</span>
-      <span class="feature-name">Neural Engine X</span>
-      <span class="feature-desc">On-device AI processing at 35 TOPS with zero latency</span>
+      <div class="feature-main">
+        <span class="feature-name">Secure File Manager</span>
+        <span class="feature-tags">
+          <span class="tag">Encryption</span>
+          <span class="tag">Privacy</span>
+        </span>
+        <span class="feature-desc-full">An encrypted private vault to keep your files completely secure — no one gets in without the key.</span>
+      </div>
       <div class="feature-arrow">→</div>
     </div>
+
+    <!-- Project 03: Synthara -->
     <div class="feature-row">
       <span class="feature-num">03</span>
-      <span class="feature-name">Acoustic Chamber</span>
-      <span class="feature-desc">Spatial audio with real-time environment mapping</span>
+      <div class="feature-main">
+        <span class="feature-name">Synthara</span>
+        <span class="feature-tags">
+          <span class="tag">GROQ API</span>
+          <span class="tag">AI Chatbot</span>
+          <span class="tag">Research</span>
+        </span>
+        <span class="feature-desc-full">A research-specialised AI chatbot powered by the GROQ API — built for deep dives, not small talk.</span>
+      </div>
       <div class="feature-arrow">→</div>
     </div>
-    <div class="feature-row">
-      <span class="feature-num">04</span>
-      <span class="feature-name">Monolithic Frame</span>
-      <span class="feature-desc">Aerospace titanium machined from a single billet</span>
-      <div class="feature-arrow">→</div>
-    </div>
-    <div class="feature-row">
-      <span class="feature-num">05</span>
-      <span class="feature-name">Zero-Compression OS</span>
-      <span class="feature-desc">Lossless performance from first boot to ten years in</span>
-      <div class="feature-arrow">→</div>
-    </div>
+
   </div>
 </section>
 
@@ -811,44 +919,44 @@
   <div class="marquee-stack">
     <div class="marquee-row">
       <div class="marquee-inner">
-        <span class="marquee-text mt-solid">OBSIDIAN&nbsp;</span>
-        <span class="marquee-text mt-outline">PRECISION&nbsp;</span>
-        <span class="marquee-text mt-solid">DESIGN&nbsp;</span>
-        <span class="marquee-text mt-outline">OBSIDIAN&nbsp;</span>
-        <span class="marquee-text mt-solid">PRECISION&nbsp;</span>
-        <span class="marquee-text mt-outline">DESIGN&nbsp;</span>
-        <span class="marquee-text mt-solid">OBSIDIAN&nbsp;</span>
-        <span class="marquee-text mt-outline">PRECISION&nbsp;</span>
-        <span class="marquee-text mt-solid">DESIGN&nbsp;</span>
-        <span class="marquee-text mt-outline">OBSIDIAN&nbsp;</span>
+        <span class="marquee-text mt-solid">PRITAM&nbsp;</span>
+        <span class="marquee-text mt-outline">BUILDS&nbsp;</span>
+        <span class="marquee-text mt-solid">REAL&nbsp;</span>
+        <span class="marquee-text mt-outline">PRITAM&nbsp;</span>
+        <span class="marquee-text mt-solid">BUILDS&nbsp;</span>
+        <span class="marquee-text mt-outline">REAL&nbsp;</span>
+        <span class="marquee-text mt-solid">PRITAM&nbsp;</span>
+        <span class="marquee-text mt-outline">BUILDS&nbsp;</span>
+        <span class="marquee-text mt-solid">REAL&nbsp;</span>
+        <span class="marquee-text mt-outline">PRITAM&nbsp;</span>
       </div>
     </div>
     <div class="marquee-row">
       <div class="marquee-inner">
-        <span class="marquee-text mt-outline">POWER&nbsp;</span>
-        <span class="marquee-text mt-solid">SILENCE&nbsp;</span>
-        <span class="marquee-text mt-outline">FUTURE&nbsp;</span>
-        <span class="marquee-text mt-solid">POWER&nbsp;</span>
-        <span class="marquee-text mt-outline">SILENCE&nbsp;</span>
-        <span class="marquee-text mt-solid">FUTURE&nbsp;</span>
-        <span class="marquee-text mt-outline">POWER&nbsp;</span>
-        <span class="marquee-text mt-solid">SILENCE&nbsp;</span>
-        <span class="marquee-text mt-outline">FUTURE&nbsp;</span>
-        <span class="marquee-text mt-solid">POWER&nbsp;</span>
+        <span class="marquee-text mt-outline">CODE&nbsp;</span>
+        <span class="marquee-text mt-solid">CREATE&nbsp;</span>
+        <span class="marquee-text mt-outline">SHIP&nbsp;</span>
+        <span class="marquee-text mt-solid">CODE&nbsp;</span>
+        <span class="marquee-text mt-outline">CREATE&nbsp;</span>
+        <span class="marquee-text mt-solid">SHIP&nbsp;</span>
+        <span class="marquee-text mt-outline">CODE&nbsp;</span>
+        <span class="marquee-text mt-solid">CREATE&nbsp;</span>
+        <span class="marquee-text mt-outline">SHIP&nbsp;</span>
+        <span class="marquee-text mt-solid">CODE&nbsp;</span>
       </div>
     </div>
     <div class="marquee-row">
       <div class="marquee-inner">
-        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
-        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
-        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
-        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
-        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
-        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
-        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
-        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
-        <span class="marquee-text mt-solid">ZERO&nbsp;</span>
-        <span class="marquee-text mt-outline">COMPROMISE&nbsp;</span>
+        <span class="marquee-text mt-solid">NEVER&nbsp;</span>
+        <span class="marquee-text mt-outline">STOPS&nbsp;</span>
+        <span class="marquee-text mt-solid">NEVER&nbsp;</span>
+        <span class="marquee-text mt-outline">STOPS&nbsp;</span>
+        <span class="marquee-text mt-solid">NEVER&nbsp;</span>
+        <span class="marquee-text mt-outline">STOPS&nbsp;</span>
+        <span class="marquee-text mt-solid">NEVER&nbsp;</span>
+        <span class="marquee-text mt-outline">STOPS&nbsp;</span>
+        <span class="marquee-text mt-solid">NEVER&nbsp;</span>
+        <span class="marquee-text mt-outline">STOPS&nbsp;</span>
       </div>
     </div>
   </div>
@@ -857,16 +965,16 @@
 <!-- SCENE 7: CTA -->
 <section id="scene-cta">
   <div class="cta-content">
-    <p class="cta-pre">Available Now</p>
+    <p class="cta-pre">Let's Build Something</p>
     <h2 class="cta-title">
-      <span class="line-1">Own the</span>
-      <span class="line-2">silence.</span>
+      <span class="line-1">Get in</span>
+      <span class="line-2">touch.</span>
     </h2>
     <div class="cta-buttons">
-      <button class="btn-primary">Order Now</button>
-      <button class="btn-secondary">Learn More</button>
+      <button class="btn-primary">View Projects</button>
+      <button class="btn-secondary">Contact Me</button>
     </div>
-    <p class="cta-footnote">Starting at $2,999 — Free shipping worldwide</p>
+    <p class="cta-footnote">Pritam Paul — West Bengal, India · Open to opportunities</p>
   </div>
 </section>
 
