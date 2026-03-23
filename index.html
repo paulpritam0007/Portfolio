@@ -28,6 +28,12 @@
     cursor: none;
   }
 
+  /* Hide custom cursor on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    body { cursor: auto; }
+    #ripple-canvas, #ripple-dot { display: none; }
+  }
+
   /* ===== CANVAS RIPPLE CURSOR ===== */
   #ripple-canvas {
     position: fixed;
@@ -40,7 +46,6 @@
     will-change: transform;
   }
 
-  /* Tiny white dot at exact cursor tip */
   #ripple-dot {
     position: fixed;
     width: 5px; height: 5px;
@@ -68,6 +73,7 @@
   #scene-intro {
     background: var(--black);
     z-index: 1;
+    padding: 40px 20px;
   }
 
   .intro-bg {
@@ -76,7 +82,6 @@
     background: radial-gradient(ellipse 60% 40% at 50% 60%, #1a1a1a 0%, #000 70%);
   }
 
-  /* Scanline noise */
   .noise {
     position: absolute;
     inset: 0;
@@ -89,6 +94,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
+    padding: 0 16px;
   }
 
   .intro-eyebrow {
@@ -97,13 +103,13 @@
     letter-spacing: 0.5em;
     color: var(--gray-400);
     text-transform: uppercase;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     opacity: 0;
     animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
   }
 
   .intro-logo {
-    font-size: clamp(72px, 14vw, 160px);
+    font-size: clamp(52px, 14vw, 160px);
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 0.9;
@@ -113,19 +119,19 @@
   }
 
   .intro-tagline {
-    font-size: clamp(11px, 1.5vw, 14px);
+    font-size: clamp(9px, 2.5vw, 14px);
     font-weight: 300;
     letter-spacing: 0.3em;
     color: var(--gray-200);
     text-transform: uppercase;
-    margin-top: 36px;
+    margin-top: 28px;
     opacity: 0;
     animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 1.6s forwards;
   }
 
   .scroll-hint {
     position: absolute;
-    bottom: 48px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -153,12 +159,14 @@
   #scene-headline {
     background: var(--white);
     color: var(--black);
+    padding: 80px 24px;
   }
 
   .hl-content {
     text-align: center;
-    padding: 0 5vw;
+    padding: 0;
     max-width: 1000px;
+    width: 100%;
   }
 
   .hl-overline {
@@ -167,14 +175,14 @@
     letter-spacing: 0.5em;
     color: #999;
     text-transform: uppercase;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
   .hl-title {
-    font-size: clamp(48px, 9vw, 110px);
+    font-size: clamp(40px, 10vw, 110px);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 0.92;
@@ -185,16 +193,15 @@
   }
   .hl-title em {
     font-style: normal;
-    color: #111;
     -webkit-text-stroke: 2px #000;
     color: transparent;
   }
 
   .hl-sub {
-    font-size: clamp(13px, 1.8vw, 18px);
+    font-size: clamp(13px, 2vw, 18px);
     font-weight: 300;
     color: #555;
-    margin-top: 40px;
+    margin-top: 32px;
     line-height: 1.7;
     max-width: 560px;
     margin-left: auto;
@@ -214,18 +221,19 @@
   /* =================== SCENE 3: PRODUCT VISUAL =================== */
   #scene-product {
     background: var(--black);
+    padding: 60px 20px;
+    min-height: 70vh;
   }
 
   .product-stage {
     position: relative;
-    width: min(500px, 80vw);
+    width: min(420px, 78vw);
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  /* Concentric rings */
   .ring {
     position: absolute;
     border-radius: 50%;
@@ -237,7 +245,6 @@
   .ring:nth-child(3) { width: 56%; height: 56%; animation-duration: 16s; border-color: rgba(255,255,255,0.13); }
   .ring:nth-child(4) { width: 34%; height: 34%; animation-duration: 10s; animation-direction: reverse; border-color: rgba(255,255,255,0.2); }
 
-  /* Ring orbital dots */
   .ring::before {
     content: '';
     position: absolute;
@@ -253,7 +260,8 @@
   .product-core {
     position: relative;
     z-index: 2;
-    width: 120px; height: 120px;
+    width: clamp(80px, 20vw, 120px);
+    height: clamp(80px, 20vw, 120px);
     background: var(--white);
     border-radius: 28px;
     display: flex;
@@ -264,36 +272,27 @@
   }
 
   .product-icon {
-    width: 56px; height: 56px;
+    width: 48px; height: 48px;
     position: relative;
-  }
-  .product-icon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--black);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    transform: translateY(-4px);
-  }
-  .product-icon::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px; height: 6px;
-    background: var(--black);
-    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--black);
+    letter-spacing: -0.04em;
+    line-height: 1;
   }
 
   .product-label {
     position: absolute;
-    bottom: -60px;
+    bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 9px;
+    font-size: clamp(7px, 2vw, 9px);
     font-weight: 700;
-    letter-spacing: 0.5em;
+    letter-spacing: 0.4em;
     color: var(--gray-400);
     text-transform: uppercase;
     white-space: nowrap;
@@ -302,18 +301,20 @@
   /* =================== SCENE 4: STATS =================== */
   #scene-stats {
     background: var(--gray-900);
+    padding: 60px 16px;
+    min-height: auto;
   }
 
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
-    width: min(900px, 90vw);
+    width: min(900px, 95vw);
   }
 
   .stat-block {
     background: var(--gray-700);
-    padding: 60px 40px;
+    padding: clamp(28px, 5vw, 60px) clamp(20px, 4vw, 40px);
     position: relative;
     overflow: hidden;
     opacity: 0;
@@ -338,7 +339,7 @@
   }
 
   .stat-num {
-    font-size: clamp(48px, 6vw, 80px);
+    font-size: clamp(36px, 8vw, 80px);
     font-weight: 900;
     letter-spacing: -0.04em;
     color: var(--white);
@@ -347,19 +348,19 @@
   }
 
   .stat-unit {
-    font-size: clamp(20px, 2.5vw, 32px);
+    font-size: clamp(14px, 3vw, 32px);
     font-weight: 200;
     color: var(--gray-200);
-    margin-left: 4px;
+    margin-left: 2px;
   }
 
   .stat-label {
-    font-size: 10px;
+    font-size: clamp(7px, 1.5vw, 10px);
     font-weight: 600;
-    letter-spacing: 0.4em;
+    letter-spacing: 0.3em;
     color: var(--gray-400);
     text-transform: uppercase;
-    margin-top: 16px;
+    margin-top: 12px;
     display: block;
   }
 
@@ -368,23 +369,23 @@
     background: var(--white);
     color: var(--black);
     min-height: auto;
-    padding: 120px 5vw;
+    padding: clamp(60px, 10vw, 120px) clamp(16px, 5vw, 5vw);
   }
 
   .features-header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: clamp(40px, 8vw, 80px);
   }
 
   .features-header h2 {
-    font-size: clamp(36px, 6vw, 72px);
+    font-size: clamp(28px, 7vw, 72px);
     font-weight: 800;
     letter-spacing: -0.04em;
     color: var(--black);
   }
 
   .features-list {
-    width: min(800px, 90vw);
+    width: min(800px, 95vw);
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -392,15 +393,20 @@
 
   .feature-row {
     display: flex;
-    align-items: center;
-    padding: 32px 40px;
+    align-items: flex-start;
+    padding: clamp(20px, 4vw, 32px) clamp(16px, 4vw, 40px);
     background: #f5f5f5;
-    gap: 32px;
+    gap: clamp(12px, 3vw, 32px);
     opacity: 0;
     transform: translateX(-20px);
     transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease;
     cursor: none;
   }
+
+  @media (hover: none) {
+    .feature-row { cursor: auto; }
+  }
+
   .feature-row:nth-child(2) { transition-delay: 0.1s; }
   .feature-row:nth-child(3) { transition-delay: 0.2s; }
   .feature-row:nth-child(4) { transition-delay: 0.3s; }
@@ -418,16 +424,17 @@
     font-weight: 700;
     letter-spacing: 0.2em;
     color: #aaa;
-    width: 32px;
+    width: 28px;
     flex-shrink: 0;
+    padding-top: 3px;
   }
 
   .feature-name {
-    font-size: clamp(16px, 2.5vw, 22px);
+    font-size: clamp(15px, 3.5vw, 22px);
     font-weight: 700;
     color: var(--black);
-    flex: 1;
     letter-spacing: -0.02em;
+    margin-bottom: 8px;
   }
 
   .feature-desc {
@@ -442,21 +449,21 @@
   .hl-keywords {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
-    margin-top: 36px;
+    margin-top: 28px;
     opacity: 0;
     transform: translateY(16px);
     transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
   }
   .hl-keywords span {
-    font-size: 10px;
+    font-size: clamp(8px, 2vw, 10px);
     font-weight: 700;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: #333;
     border: 1.5px solid #ccc;
-    padding: 8px 18px;
+    padding: 7px 14px;
     border-radius: 100px;
     transition: border-color 0.3s ease, color 0.3s ease;
   }
@@ -468,27 +475,29 @@
     flex-direction: column;
     gap: 8px;
     flex: 1;
+    min-width: 0;
   }
 
   .feature-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 5px;
   }
 
   .tag {
-    font-size: 9px;
+    font-size: clamp(7px, 1.8vw, 9px);
     font-weight: 700;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #555;
     border: 1px solid #ddd;
-    padding: 4px 10px;
+    padding: 4px 8px;
     border-radius: 100px;
+    white-space: nowrap;
   }
 
   .feature-desc-full {
-    font-size: 13px;
+    font-size: clamp(12px, 2vw, 13px);
     font-weight: 300;
     color: #666;
     line-height: 1.6;
@@ -497,8 +506,8 @@
 
   .feature-strategy {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 6px;
     margin-top: 4px;
     padding: 10px 14px;
     background: #efefef;
@@ -519,6 +528,7 @@
     font-weight: 300;
     color: #bbb;
     font-style: italic;
+    line-height: 1.8;
   }
 
   .feature-arrow {
@@ -532,6 +542,7 @@
     font-size: 10px;
     color: #aaa;
     transition: border-color 0.3s ease, color 0.3s ease;
+    margin-top: 2px;
   }
   .feature-row:hover .feature-arrow { border-color: #000; color: #000; }
 
@@ -539,6 +550,8 @@
   #scene-motion {
     background: var(--black);
     overflow: hidden;
+    min-height: 40vh;
+    padding: 0;
   }
 
   .marquee-stack {
@@ -563,10 +576,10 @@
   .marquee-row:nth-child(3) .marquee-inner { animation-duration: 10s; }
 
   .marquee-text {
-    font-size: clamp(56px, 9vw, 100px);
+    font-size: clamp(36px, 9vw, 100px);
     font-weight: 900;
     letter-spacing: -0.03em;
-    padding: 0 40px;
+    padding: 0 clamp(16px, 4vw, 40px);
     white-space: nowrap;
     user-select: none;
   }
@@ -580,6 +593,7 @@
   /* =================== SCENE 7: CTA =================== */
   #scene-cta {
     background: var(--black);
+    padding: 80px 24px;
   }
 
   .cta-content { text-align: center; }
@@ -596,7 +610,7 @@
   }
 
   .cta-title {
-    font-size: clamp(48px, 10vw, 120px);
+    font-size: clamp(40px, 12vw, 120px);
     font-weight: 900;
     letter-spacing: -0.05em;
     line-height: 0.88;
@@ -613,9 +627,10 @@
 
   .cta-buttons {
     display: flex;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
     justify-content: center;
-    margin-top: 60px;
+    margin-top: 48px;
     opacity: 0;
     animation: fadeUp 0.8s ease 1.2s both;
   }
@@ -624,7 +639,7 @@
     background: var(--white);
     color: var(--black);
     border: none;
-    padding: 18px 48px;
+    padding: 16px clamp(28px, 8vw, 48px);
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -632,7 +647,13 @@
     text-transform: uppercase;
     cursor: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 160px;
   }
+
+  @media (hover: none) {
+    .btn-primary, .btn-secondary { cursor: auto; }
+  }
+
   .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 20px 60px rgba(255,255,255,0.15);
@@ -642,7 +663,7 @@
     background: transparent;
     color: var(--white);
     border: 1px solid rgba(255,255,255,0.25);
-    padding: 18px 48px;
+    padding: 16px clamp(28px, 8vw, 48px);
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     font-weight: 600;
@@ -650,6 +671,7 @@
     text-transform: uppercase;
     cursor: none;
     transition: border-color 0.3s ease, background 0.3s ease;
+    min-width: 160px;
   }
   .btn-secondary:hover {
     border-color: rgba(255,255,255,0.6);
@@ -657,20 +679,21 @@
   }
 
   .cta-footnote {
-    margin-top: 48px;
+    margin-top: 40px;
     font-size: 11px;
     font-weight: 300;
     color: var(--gray-400);
     letter-spacing: 0.1em;
     opacity: 0;
     animation: fadeUp 0.8s ease 1.5s both;
+    padding: 0 16px;
   }
 
   /* =================== PROGRESS BAR =================== */
   .progress-bar {
     position: fixed;
     top: 0; left: 0;
-    height: 1px;
+    height: 2px;
     background: var(--white);
     z-index: 1000;
     width: 0%;
@@ -681,34 +704,37 @@
   /* =================== NAV =================== */
   nav {
     position: fixed;
-    top: 32px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
     display: flex;
     align-items: center;
-    gap: 48px;
+    justify-content: space-between;
+    padding: 20px 24px;
     opacity: 0;
     animation: fadeDown 0.8s ease 2s forwards;
     mix-blend-mode: difference;
+    background: transparent;
   }
 
   .nav-logo {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.2em;
     color: var(--white);
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 24px;
     list-style: none;
   }
 
   .nav-links a {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.3em;
     color: var(--white);
@@ -719,6 +745,66 @@
   }
   .nav-links a:hover { opacity: 1; }
 
+  /* Hamburger menu for mobile */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--white);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Mobile Nav Overlay */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.96);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mobile-nav a {
+    font-size: clamp(28px, 8vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav a:hover { opacity: 1; }
+  .mobile-nav-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+
   /* =================== KEYFRAMES =================== */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -726,21 +812,13 @@
   }
 
   @keyframes fadeDown {
-    from { opacity: 0; transform: translate(-50%, -16px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes blurReveal {
-    from {
-      opacity: 0;
-      filter: blur(24px);
-      transform: scale(1.04);
-    }
-    to {
-      opacity: 1;
-      filter: blur(0px);
-      transform: scale(1);
-    }
+    from { opacity: 0; filter: blur(24px); transform: scale(1.04); }
+    to { opacity: 1; filter: blur(0px); transform: scale(1); }
   }
 
   @keyframes ringRotate {
@@ -763,24 +841,114 @@
     to { transform: translateX(-50%); }
   }
 
-  /* Responsive */
+  /* =================== RESPONSIVE BREAKPOINTS =================== */
+
+  /* Tablet */
   @media (max-width: 768px) {
-    .stats-grid { grid-template-columns: 1fr; }
-    .feature-desc { display: none; }
-    nav { gap: 24px; }
     .nav-links { display: none; }
-    .cta-buttons { flex-direction: column; align-items: center; }
+    .nav-toggle { display: flex; }
+    .mobile-nav { display: flex; }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .feature-desc { display: none; }
+
+    .hl-title em { -webkit-text-stroke: 1.5px #000; }
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .stat-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 24px;
+    }
+
+    .stat-label {
+      margin-top: 0;
+      text-align: right;
+    }
+
+    .product-stage {
+      width: min(300px, 80vw);
+    }
+
+    .intro-logo {
+      font-size: clamp(48px, 16vw, 80px);
+    }
+
+    .hl-title {
+      font-size: clamp(36px, 12vw, 60px);
+    }
+
+    .feature-strategy {
+      display: none;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn-primary, .btn-secondary {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .marquee-text {
+      font-size: clamp(28px, 10vw, 56px);
+    }
+
+    #scene-motion {
+      min-height: 30vh;
+    }
+
+    .scroll-hint {
+      bottom: 24px;
+    }
+
+    nav {
+      padding: 16px 20px;
+    }
+  }
+
+  /* Very small screens */
+  @media (max-width: 360px) {
+    .intro-logo {
+      font-size: 44px;
+    }
+    .tag {
+      font-size: 7px;
+      padding: 3px 7px;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Canvas Ripple -->
+<!-- Canvas Ripple (desktop only) -->
 <canvas id="ripple-canvas"></canvas>
 <div id="ripple-dot"></div>
 
 <!-- Progress Bar -->
 <div class="progress-bar" id="progressBar"></div>
+
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+  <a href="#scene-headline" class="mobile-link">About</a>
+  <a href="#scene-stats" class="mobile-link">Stats</a>
+  <a href="#scene-features" class="mobile-link">Projects</a>
+  <a href="#scene-cta" class="mobile-link">Contact</a>
+</div>
 
 <!-- Nav -->
 <nav>
@@ -791,6 +959,9 @@
     <li><a href="#scene-features">Projects</a></li>
     <li><a href="#scene-cta">Contact</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- SCENE 1: INTRO -->
@@ -832,7 +1003,7 @@
     <div class="ring"></div>
     <div class="ring"></div>
     <div class="product-core">
-      <div class="product-icon"></div>
+      <div class="product-icon">P</div>
     </div>
     <span class="product-label">Pritam Paul — West Bengal, India</span>
   </div>
@@ -850,7 +1021,7 @@
       <span class="stat-label">Technologies</span>
     </div>
     <div class="stat-block">
-      <span class="stat-num">∞<span class="stat-unit"></span></span>
+      <span class="stat-num">∞</span>
       <span class="stat-label">Ideas in Queue</span>
     </div>
   </div>
@@ -875,8 +1046,8 @@
         </span>
         <span class="feature-desc-full">Scented candle e-commerce platform with full online ordering powered by RazorPay API and a Firebase NoSQL backend.</span>
         <span class="feature-strategy">
-          <span class="strategy-label">Business Strategy</span>
-          <span class="strategy-space"?>●Vanilla HTML/CSS/JS Single Page Application<br>●Candle Lighting Intro Animation<br>●Dark Mode System<br>●Custom Cursor<br>●Mobile Responsive Layout<br>●Scroll Reveal Animations<br>●Announcement Carousel</span>
+          <span class="strategy-label">Features</span>
+          <span class="strategy-space">● Vanilla HTML/CSS/JS SPA<br>● Candle Lighting Intro Animation<br>● Dark Mode System<br>● Custom Cursor<br>● Mobile Responsive Layout<br>● Scroll Reveal Animations<br>● Announcement Carousel</span>
         </span>
       </div>
       <div class="feature-arrow">→</div>
@@ -979,153 +1150,139 @@
 </section>
 
 <script>
-  // ===== CANVAS RIPPLE ENGINE =====
-  const canvas = document.getElementById('ripple-canvas');
-  const ctx = canvas.getContext('2d');
-  const dot = document.getElementById('ripple-dot');
+  // ===== DETECT TOUCH DEVICE =====
+  const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
-  // Resize canvas to full viewport
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  // ===== CANVAS RIPPLE ENGINE (desktop only) =====
+  if (!isTouchDevice()) {
+    const canvas = document.getElementById('ripple-canvas');
+    const ctx = canvas.getContext('2d');
+    const dot = document.getElementById('ripple-dot');
 
-  // Ripple pool
-  const ripples = [];
-  let mouseX = -999, mouseY = -999;
-  let lastRippleTime = 0;
-  let isOnDark = false;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-  // Ripple flavors: 'move' = small fast rings, 'click' = big burst
-  function spawnRipple(x, y, type = 'move') {
-    if (type === 'move') {
-      ripples.push({ x, y, r: 2, maxR: 80 + Math.random() * 40, alpha: 0.55, lineWidth: 0.8, speed: 2.2 + Math.random() * 1.2 });
-    } else if (type === 'click') {
-      // Burst: 5 rings at staggered start radii
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-          ripples.push({ x, y, r: i * 12, maxR: 180 + i * 30, alpha: 0.9 - i * 0.1, lineWidth: 1.5 - i * 0.2, speed: 3.5 + i * 0.4 });
-        }, i * 40);
+    const ripples = [];
+    let mouseX = -999, mouseY = -999;
+    let lastRippleTime = 0;
+    let isOnDark = false;
+
+    function spawnRipple(x, y, type = 'move') {
+      if (type === 'move') {
+        ripples.push({ x, y, r: 2, maxR: 80 + Math.random() * 40, alpha: 0.55, lineWidth: 0.8, speed: 2.2 + Math.random() * 1.2 });
+      } else if (type === 'click') {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            ripples.push({ x, y, r: i * 12, maxR: 180 + i * 30, alpha: 0.9 - i * 0.1, lineWidth: 1.5 - i * 0.2, speed: 3.5 + i * 0.4 });
+          }, i * 40);
+        }
       }
     }
-  }
 
-  // Check if cursor is on a dark section
-  const darkSections = new Set(['scene-intro','scene-product','scene-motion','scene-stats','scene-cta']);
-  function checkDarkSection(x, y) {
-    const el = document.elementFromPoint(x, y);
-    const sec = el?.closest('section');
-    return sec ? darkSections.has(sec.id) : false;
-  }
-
-  // Mouse move — spawn ripple on movement, throttled
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.left = mouseX + 'px';
-    dot.style.top = mouseY + 'px';
-
-    isOnDark = checkDarkSection(mouseX, mouseY);
-    dot.style.opacity = isOnDark ? '1' : '0';
-
-    const now = performance.now();
-    // Spawn a new move-ripple every ~80ms of movement on dark sections
-    if (isOnDark && now - lastRippleTime > 80) {
-      spawnRipple(mouseX, mouseY, 'move');
-      lastRippleTime = now;
+    const darkSections = new Set(['scene-intro','scene-product','scene-motion','scene-stats','scene-cta']);
+    function checkDarkSection(x, y) {
+      const el = document.elementFromPoint(x, y);
+      const sec = el?.closest('section');
+      return sec ? darkSections.has(sec.id) : false;
     }
-  });
 
-  // Click — burst of rings
-  document.addEventListener('click', e => {
-    if (checkDarkSection(e.clientX, e.clientY)) {
-      spawnRipple(e.clientX, e.clientY, 'click');
-    }
-  });
-
-  // Main render loop
-  function render() {
-    // Clear with full transparency — canvas is overlaid, mix-blend-mode:screen
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = ripples.length - 1; i >= 0; i--) {
-      const rp = ripples[i];
-
-      // Fade based on progress through life
-      const progress = rp.r / rp.maxR;
-      const currentAlpha = rp.alpha * (1 - progress * progress); // ease-out fade
-
-      if (currentAlpha < 0.003 || rp.r >= rp.maxR) {
-        ripples.splice(i, 1);
-        continue;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+      isOnDark = checkDarkSection(mouseX, mouseY);
+      dot.style.opacity = isOnDark ? '1' : '0';
+      const now = performance.now();
+      if (isOnDark && now - lastRippleTime > 80) {
+        spawnRipple(mouseX, mouseY, 'move');
+        lastRippleTime = now;
       }
+    });
 
-      ctx.beginPath();
-      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255, 255, 255, ${currentAlpha})`;
-      ctx.lineWidth = rp.lineWidth * (1 - progress * 0.5); // thin as they expand
-      ctx.stroke();
+    document.addEventListener('click', e => {
+      if (checkDarkSection(e.clientX, e.clientY)) {
+        spawnRipple(e.clientX, e.clientY, 'click');
+      }
+    });
 
-      // Expand
-      rp.r += rp.speed;
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const rp = ripples[i];
+        const progress = rp.r / rp.maxR;
+        const currentAlpha = rp.alpha * (1 - progress * progress);
+        if (currentAlpha < 0.003 || rp.r >= rp.maxR) { ripples.splice(i, 1); continue; }
+        ctx.beginPath();
+        ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${currentAlpha})`;
+        ctx.lineWidth = rp.lineWidth * (1 - progress * 0.5);
+        ctx.stroke();
+        rp.r += rp.speed;
+      }
+      requestAnimationFrame(render);
     }
+    render();
 
-    requestAnimationFrame(render);
-  }
-  render();
-
-  // Passive ambient ripples — pulse from center of dark sections when idle
-  let idleTimer = null;
-  let lastMoveTime = performance.now();
-  document.addEventListener('mousemove', () => { lastMoveTime = performance.now(); });
-
-  function ambientPulse() {
-    const idle = performance.now() - lastMoveTime > 2000;
-    if (idle && ripples.length < 3) {
-      // Pulse from current position if on dark
-      if (isOnDark && mouseX > 0) {
+    let lastMoveTime = performance.now();
+    document.addEventListener('mousemove', () => { lastMoveTime = performance.now(); });
+    function ambientPulse() {
+      const idle = performance.now() - lastMoveTime > 2000;
+      if (idle && ripples.length < 3 && isOnDark && mouseX > 0) {
         spawnRipple(mouseX, mouseY, 'move');
       }
+      setTimeout(ambientPulse, 900);
     }
-    setTimeout(ambientPulse, 900);
+    ambientPulse();
   }
-  ambientPulse();
 
-  // Progress bar
+  // ===== PROGRESS BAR =====
   const progressBar = document.getElementById('progressBar');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
     progressBar.style.width = pct + '%';
-  });
+  }, { passive: true });
 
-  // Scroll reveal
-  const observers = [];
+  // ===== SCROLL REVEAL =====
   const revealSections = document.querySelectorAll('#scene-headline, #scene-stats, #scene-features');
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('scene-visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('scene-visible');
     });
-  }, { threshold: 0.2 });
-
+  }, { threshold: 0.15 });
   revealSections.forEach(s => observer.observe(s));
 
-  // CTA section re-trigger animation by adding class when visible
-  const ctaObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('[style*="animation"]').forEach(el => {
-          el.style.animationPlayState = 'running';
-        });
-      }
-    });
-  }, { threshold: 0.3 });
+  // ===== MOBILE NAV =====
+  const navToggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileNavClose = document.getElementById('mobileNavClose');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
 
-  document.querySelectorAll('#scene-cta').forEach(s => ctaObserver.observe(s));
+  navToggle.addEventListener('click', () => {
+    mobileNav.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  mobileNavClose.addEventListener('click', closeMobileNav);
+  mobileLinks.forEach(link => link.addEventListener('click', closeMobileNav));
+
+  // ===== REDUCE MOTION ON MOBILE for performance =====
+  if (isTouchDevice()) {
+    // Slow down marquee slightly for readability on small screens
+    document.querySelectorAll('.marquee-inner').forEach(el => {
+      const currentDuration = parseFloat(getComputedStyle(el).animationDuration);
+      el.style.animationDuration = (currentDuration * 1.3) + 's';
+    });
+  }
 </script>
 </body>
 </html>
